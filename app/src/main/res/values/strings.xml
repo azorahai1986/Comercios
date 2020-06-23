@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Comercios</string>
+    <string name="tvAccder">Acceder</string>
+    <string name="tvTitulo">Comercio</string>
+    <string name="tvcerrar">Cerrar sesion</string>
+    <string name="tvLogin">Ingresa tu mail y contraseña.\n Solo si eres usuario Registrado</string>
+
+    <string name="nombre">Nuevo Nombre</string>
+    <string name="precio">Nuevo Precio</string>
+    <string name="categoria">Nueva Categoria</string>
+    <string name="marca">Nueva Marca</string>
+
+
+</resources>

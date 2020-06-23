@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "310718126878",
+    "firebase_url": "https://comercios-df75e.firebaseio.com",
+    "project_id": "comercios-df75e",
+    "storage_bucket": "comercios-df75e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310718126878:android:9e85f458fbb2beaf6f870f",
+        "android_client_info": {
+          "package_name": "com.example.comercios"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310718126878-jiohpr557r2v0vgbam0lre292qg5c698.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH19C1hFyWz3rojQx8vEeONlijkMsruBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "310718126878-jiohpr557r2v0vgbam0lre292qg5c698.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

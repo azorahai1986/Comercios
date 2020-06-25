@@ -10,6 +10,8 @@ import com.example.comercios.ProviderType
 import com.example.comercios.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.btAcceder
@@ -49,15 +51,17 @@ class LoginActivity : AppCompatActivity() {
                 ?.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
 
-                        Log.e("TokenActividadRegis", task.toString())
-                        val idToken = task?.result?.token ?: ""
-                        Log.e("TokenT", task?.result?.token ?: "")
+                        val task = task?.result?.token ?: ""
+                        Log.e("TaskLoginAct", task)
+
 
                     } else {
                         // Handle error -> task.getException();
                     }
                 }
+
         }
+
 
     }
         fun showAlertAcceder(){
@@ -80,4 +84,6 @@ class LoginActivity : AppCompatActivity() {
 
 
         }
+
+
 }

@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     var datosDelAdapter:ArrayList<String>? = null
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -47,7 +48,6 @@ class MainActivity : AppCompatActivity() {
             flot_btAgregar.visibility = View.GONE
         } else {
             Toast.makeText(this, "Administrador", Toast.LENGTH_SHORT).show()
-            Log.e("TokenMainAct", token.withIndex().toString())
             ibCerrarSesion.visibility = View.VISIBLE
             tvCerrarSesion.visibility = View.VISIBLE
             tvTitulo.visibility = View.GONE
@@ -71,9 +71,7 @@ class MainActivity : AppCompatActivity() {
         flot_btAgregar.setOnClickListener {
             val intent = Intent(this, ActivityAgregar::class.java)
             val b = Bundle()
-            b.putString("datosDelActivity", datosDelAdapter.toString())
             intent.putExtras(b)
-            //Log.e("datosDelAdapter", datosDelAdapter)
             startActivity(intent)
         }
         // inflar recyclerView...................................................
@@ -85,7 +83,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        loadPromociones()
 
     }
     // Ingresar con mail y contraseña..........................................
@@ -103,6 +100,11 @@ class MainActivity : AppCompatActivity() {
             adapter?.notifyDataSetChanged()
 
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadPromociones()
     }
 
 

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.comercios.MainActivity
 import com.example.comercios.R
 import com.example.comercios.adaptadores.AdapterPromociones
 import com.example.comercios.modelos.Promociones
@@ -65,23 +66,11 @@ class ActivityAgregar : AppCompatActivity(), View.OnClickListener{
             progressDialog.setTitle("Cargando...")
             progressDialog.show()
 
+            // para modificar los datos de una lista usando firestore..........................
 
             val imageRef = storageReference!!.child("images/"+UUID.randomUUID().toString())
-            imageRef.putFile(filePath!!).addOnSuccessListener {
-                progressDialog.dismiss()
-                Toast.makeText(applicationContext, "Archivo Cargado", Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener{
-                progressDialog.dismiss()
-                Toast.makeText(applicationContext, "Falló carga", Toast.LENGTH_SHORT).show()
 
-            }.addOnProgressListener { taskSnapshot ->
-                val progress = 100.0 * taskSnapshot.bytesTransferred/taskSnapshot.totalByteCount
-                progressDialog.setMessage("Cargado" + progress.toInt() + "%...")
-            }
-
-            val baos = ByteArrayOutputStream()
-            val data = baos.toByteArray()
-            var uploadTask = imageRef.putBytes(data)
+            var uploadTask = imageRef.putFile(filePath!!)
             val urlTask = uploadTask.continueWithTask { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
@@ -92,7 +81,9 @@ class ActivityAgregar : AppCompatActivity(), View.OnClickListener{
             }.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val downloadUri = task.result
-                    Log.e("DescargarUri", downloadUri.toString())
+
+                    // para editar los datos de la lista...........................................
+
                     var cate = tvCategoria.text.toString()
                     var marca = tvMarca.text.toString()
                     var imagen = downloadUri.toString()
@@ -110,8 +101,6 @@ class ActivityAgregar : AppCompatActivity(), View.OnClickListener{
 
                     FirebaseFirestore.getInstance().collection("Promociones")
                         .document().set(map)
-                    Log.e("DatosEditor", map.toString())
-                    Toast.makeText(this, "anda", Toast.LENGTH_SHORT).show()
                     finish()
                 } else {
                     // Handle failures
@@ -120,6 +109,7 @@ class ActivityAgregar : AppCompatActivity(), View.OnClickListener{
             }
 
         }
+
 
 
     }
@@ -155,9 +145,13 @@ class ActivityAgregar : AppCompatActivity(), View.OnClickListener{
             adapter?.mutableListopromo = it as ArrayList<Promociones>
             adapter?.notifyDataSetChanged()
             val autocompletar = mutableListOf<String>()
+            val autocompletarMarca = mutableListOf<String>()
+            val autocompletarCate = mutableListOf<String>()
 
             for (x in it){
                 autocompletar.add(x.nombre)
+                autocompletarMarca.add(x.marca)
+                autocompletarCate.add(x.cate)
 
             }
             val adapterAuto = ArrayAdapter(this, android.R.layout.simple_list_item_1, autocompletar)
@@ -165,6 +159,18 @@ class ActivityAgregar : AppCompatActivity(), View.OnClickListener{
             tvNombre.setAdapter(adapterAuto)
             tvNombre.setOnFocusChangeListener { view, b ->
                 if (b) tvNombre.showDropDown()}
+
+            val adapterAutoMarca = ArrayAdapter(this, android.R.layout.simple_list_item_1, autocompletarMarca)
+            tvMarca.threshold = 0
+            tvMarca.setAdapter(adapterAutoMarca)
+            tvMarca.setOnFocusChangeListener { view, b ->
+                if (b) tvMarca.showDropDown()}
+
+            val adapterAutoCate = ArrayAdapter(this, android.R.layout.simple_list_item_1, autocompletarCate)
+            tvCategoria.threshold = 0
+            tvCategoria.setAdapter(adapterAutoCate)
+            tvCategoria.setOnFocusChangeListener { view, b ->
+                if (b) tvCategoria.showDropDown()}
         })
 
     }

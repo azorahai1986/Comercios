@@ -9,6 +9,7 @@
     <string name="precio">Nuevo Precio</string>
     <string name="categoria">Nueva Categoria</string>
     <string name="marca">Nueva Marca</string>
+    <string name="salir_editar">Precione aquí para \n aplicar los cambios</string>
 
 
 </resources>

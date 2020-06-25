@@ -85,29 +85,17 @@
         android:layout_height="362dp"
         android:layout_marginTop="64dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/fideos" />
-
-    <Button
-        android:id="@+id/btEditar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="106dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iV_mostrarImagen" />
 
 
     <TextView
         android:id="@+id/tvMostrarNombre"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="230dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="200dp"
         android:text="Fideos"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,52 +106,123 @@
         android:id="@+id/tvMostrarMarca"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="230dp"
+        android:layout_marginTop="426dp"
+        android:layout_marginEnd="200dp"
         android:text="Matarazzo"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMostrarNombre" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMostrar" />
 
     <TextView
         android:id="@+id/tvMostrarPrecio"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="230dp"
-        android:layout_marginBottom="179dp"
+        android:layout_marginTop="480dp"
+        android:layout_marginEnd="200dp"
         android:text="150"
         android:textColor="@color/colorFirebase"
         android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMostrarMarca" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMostrar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatBtEditPrecio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="170dp"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="480dp"
         android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:elevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.751"
+        app:layout_constraintHorizontal_bias="0.596"
         app:layout_constraintStart_toEndOf="@+id/tvMostrarPrecio"
-        app:srcCompat="@drawable/icon_edit" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMostrar"
+        app:srcCompat="@drawable/ic_money" />
 
     <EditText
         android:id="@+id/etMostrarPrecio"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="124dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="470dp"
         android:ems="10"
+        android:hint="precio"
         android:inputType="numberDecimal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.186"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMostrar" />
+
+    <EditText
+        android:id="@+id/etMostrarMarca"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="425dp"
+        android:ems="10"
+        android:hint="Marca"
+        android:inputType="textAutoCorrect|textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMostrar" />
+
+    <EditText
+        android:id="@+id/etMostrarNombre"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="370dp"
+        android:ems="10"
+        android:hint="Producto"
+        android:inputType="textAutoCorrect|textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMostrar" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatBtEditMarca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="424dp"
+        android:layout_marginEnd="44dp"
+        android:clickable="true"
+        android:elevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMostrar"
+        app:srcCompat="@drawable/icon_edit" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatBtEditProducto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="368dp"
+        android:layout_marginEnd="44dp"
+        android:clickable="true"
+        android:elevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMostrar"
+        app:srcCompat="@drawable/icon_edit" />
+
+    <TextView
+        android:id="@+id/tvSalirEdicion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="560dp"
+        android:text="@string/salir_editar"
+        android:textColor="#FFFFFF"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        android:background="@color/colorPrimary"
+        android:elevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMostrar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,35 +9,20 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.comercios.MainActivity
+import com.example.comercios.ProviderType
 import com.example.comercios.R
 import com.example.comercios.actividades.MostrarImagen
 import com.example.comercios.modelos.Promociones
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.template_rvpromo.view.*
 
 class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val activity: MainActivity):RecyclerView.Adapter<AdapterPromociones.ViewHolderPromo>() {
 
-
-    var arrayDatos = ArrayList<String>(mutableListopromo.size)
-    fun darValor(items:ArrayList<Promociones>){
-        mutableListopromo = items
-
-        arrayDatos = ArrayList()
-        Log.e("MutabledaAdapter2", mutableListopromo.toString())
-
-        var sum = ""
-        for (x in items){
-            Log.e("AdapFor", x.nombre)
-            arrayDatos.add(x.nombre)
-            sum += x.nombre
-            val text = sum
-
-            Log.e("Adapfor1", arrayDatos.toString())
-            Log.e("Adapfor2", text)
-        }
-       // activity.extraerDatos(nombres = arrayDatos)
-
-    }
-
+    lateinit var auth:FirebaseAuth
 
    inner class ViewHolderPromo(itemView: View):RecyclerView.ViewHolder(itemView)
 
@@ -56,6 +41,9 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
         holder.itemView.tviewMarca.text = enlazarVista.marca
         Glide.with(activity).load(enlazarVista.imagen).into(holder.itemView.imageViewPromo)
 
+
+
+
         holder.itemView.cardView_promo.setOnClickListener {
             activity.startActivity(Intent(activity, MostrarImagen::class.java)
                 .putExtra("Id_Imagen", enlazarVista.imagen)
@@ -66,6 +54,8 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
         }
 
 
+
     }
+
 
 }

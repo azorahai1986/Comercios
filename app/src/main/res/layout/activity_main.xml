@@ -39,17 +39,21 @@
         android:id="@+id/swiperefreshlayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:layout_weight="1"
-        android:layout_marginTop="30dp"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rv_promociones"
-        android:layout_marginTop="30dp"
+        app:layout_anchor="@+id/swiperefreshlayout"
+        app:layout_anchorGravity="center"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-    </androidx.recyclerview.widget.RecyclerView>
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_promociones"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"></androidx.recyclerview.widget.RecyclerView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <TextView
         android:id="@+id/tvProvider"
         android:layout_width="wrap_content"
@@ -91,7 +95,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/tvcerrar"
-                android:visibility="gone"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -103,7 +106,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -148,14 +150,14 @@
                 app:srcCompat="@drawable/ic_acceder" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/flot_btAgregar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fabSize="normal"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="290dp"
+        android:layout_gravity="bottom|right"
         android:layout_marginBottom="20dp"
-        android:src="@drawable/ic_agregar" />
+        android:src="@drawable/ic_agregar"
+        app:fabSize="normal" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

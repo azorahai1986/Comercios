@@ -15,7 +15,11 @@ import com.example.comercios.adaptadores.AdapterPromociones
 import com.example.comercios.modelos.Promociones
 import com.example.comercios.repoyviewmodel.MainViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_mostrar_imagen.*
+
 enum class ProviderType {
     BIENVENIDO
 }
@@ -24,13 +28,37 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
 
     private var adapter: AdapterPromociones? = null
-    var datosDelAdapter:ArrayList<String>? = null
+    private lateinit var auth: FirebaseAuth // para saber si hay existe un email
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //para saber si existe un email................................
+        auth = Firebase.auth
+        val user = Firebase.auth.currentUser
+        user?.let {
+            // Name, email address, and profile photo Url
+            val email = user.email
+
+            Log.e("EmailMainAct", email)
+
+            val uid = user.uid
+
+        }
+        if (user?.email.isNullOrEmpty()){
+            ibCerrarSesion.visibility = View.INVISIBLE
+            tvCerrarSesion.visibility = View.INVISIBLE
+            tvTitulo.visibility = View.VISIBLE
+            flot_btAgregar.visibility = View.INVISIBLE
+            tvProvider.visibility = View.INVISIBLE
+            tvEmail.visibility = View.INVISIBLE
+        }else{
+
+            tvTitulo.visibility = View.INVISIBLE
+
+        }
         swiperefreshlayout.setOnRefreshListener {
             //cargar datos de firebase
             loadPromociones()
@@ -40,22 +68,12 @@ class MainActivity : AppCompatActivity() {
         val bundle = intent.extras
         val email = bundle?.getString("email")
         val provider = bundle?.getString("provider")
-        val token = bundle?.getString("idToken")
-        setup(email ?: "", provider ?: "", token ?: "")
+        setup(email ?: "", provider ?: "")
 
-        if (token.isNullOrEmpty()) {
-            Toast.makeText(this, "Visitante", Toast.LENGTH_SHORT).show()
-            flot_btAgregar.visibility = View.GONE
-        } else {
-            Toast.makeText(this, "Administrador", Toast.LENGTH_SHORT).show()
-            ibCerrarSesion.visibility = View.VISIBLE
-            tvCerrarSesion.visibility = View.VISIBLE
-            tvTitulo.visibility = View.GONE
-            flot_btAgregar.visibility = View.VISIBLE
-        }
+
         // Dar Eventos a los botones.......................................
         btAcceder.setOnClickListener {
-            if (token.isNullOrEmpty()){
+            if (user?.email.isNullOrEmpty()){
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }else{
@@ -70,8 +88,6 @@ class MainActivity : AppCompatActivity() {
         //Ir al activityAgregar...............................................
         flot_btAgregar.setOnClickListener {
             val intent = Intent(this, ActivityAgregar::class.java)
-            val b = Bundle()
-            intent.putExtras(b)
             startActivity(intent)
         }
         // inflar recyclerView...................................................
@@ -81,16 +97,12 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
-
     }
     // Ingresar con mail y contraseña..........................................
-    fun setup(email: String, provider:String, token:String){
+    fun setup(email: String, provider:String){
         title = "Inicio"
         tvEmail.text = email
         tvProvider.text = provider
-        val token = token
 
     }
     // Traer los datos de Firebase...............................................
@@ -106,7 +118,6 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         loadPromociones()
     }
-
 
 
 }

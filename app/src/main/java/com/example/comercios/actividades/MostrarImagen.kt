@@ -48,14 +48,8 @@ class MostrarImagen : AppCompatActivity() {
         auth = Firebase.auth
         val user = Firebase.auth.currentUser
         user?.let {
-            // Name, email address, and profile photo Url
-
             val email = user.email
-
-            Log.e("Email", email)
-
             val uid = user.uid
-
         }
 
             if (user?.email.isNullOrEmpty()){
@@ -64,16 +58,19 @@ class MostrarImagen : AppCompatActivity() {
                 imagebtEditar.visibility = View.INVISIBLE
                 tvEditMostrar.visibility = View.INVISIBLE
                 tvDeleteMostrar.visibility = View.INVISIBLE
-                etMostrarNombre.visibility = View.INVISIBLE
-                etMostrarMarca.visibility = View.INVISIBLE
-                etMostrarPrecio.visibility = View.INVISIBLE
-                floatBtEditProducto.visibility = View.INVISIBLE
-                floatBtEditMarca.visibility = View.INVISIBLE
-                floatBtEditPrecio.visibility = View.INVISIBLE
-            }else{
-                Log.e("USERVERI", user.toString())
 
             }
+        imagebtEditar.setOnClickListener {
+            tvEditMostrar.visibility = View.VISIBLE
+            tvDeleteMostrar.visibility = View.VISIBLE
+            etMostrarNombre.visibility = View.VISIBLE
+            etMostrarMarca.visibility = View.VISIBLE
+            etMostrarPrecio.visibility = View.VISIBLE
+            floatBtEditProducto.visibility = View.VISIBLE
+            floatBtEditMarca.visibility = View.VISIBLE
+            floatBtEditPrecio.visibility = View.VISIBLE
+            tvSalirEdicion.visibility = View.VISIBLE
+        }
 
 
         // metodo para editar y eliminar lista

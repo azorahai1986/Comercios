@@ -18,6 +18,7 @@ import com.example.comercios.R
 import com.example.comercios.adaptadores.AdapterPromociones
 import com.example.comercios.modelos.Promociones
 import com.example.comercios.repoyviewmodel.MainViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage

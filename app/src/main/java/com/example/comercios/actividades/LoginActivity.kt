@@ -34,8 +34,7 @@ class LoginActivity : AppCompatActivity() {
                         if (it.isSuccessful) {
                             showHome(
                                 it.result?.user?.email ?: "",
-                                ProviderType.BIENVENIDO,
-                                idToken = "idToken"
+                                ProviderType.BIENVENIDO
                             )
 
                         } else {
@@ -74,12 +73,10 @@ class LoginActivity : AppCompatActivity() {
         }
         // funcion para pasar los datos del email y la contraseña
         // este providerType será creado en el activityEditor
-        private fun showHome(email: String, provider: ProviderType, idToken: String){
+        private fun showHome(email: String, provider: ProviderType){
             val homeIntent = Intent(this, MainActivity::class.java)
             homeIntent.putExtra("email", email)
             homeIntent.putExtra("provider", provider.name)
-            homeIntent.putExtra("idToken", idToken)
-
             startActivity(homeIntent)
 
 

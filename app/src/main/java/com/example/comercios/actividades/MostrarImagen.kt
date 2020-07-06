@@ -80,7 +80,7 @@ class MostrarImagen : AppCompatActivity() {
         idMarca = intent.getStringExtra(ID_MARCA)
         id = intent.getStringExtra(ID)
 
-        tvMostrarPrecio.text = idPrecio
+        tvMostrarPrecio.text = "$ $idPrecio"
         tvMostrarNombre.text = idNombre
         tvMostrarMarca.text = idMarca
         Glide.with(applicationContext).load(idImagen).into(iV_mostrarImagen)
@@ -145,10 +145,13 @@ class MostrarImagen : AppCompatActivity() {
                 }
         }
         tvSalirEdicion.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+           finish()
         }
 
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

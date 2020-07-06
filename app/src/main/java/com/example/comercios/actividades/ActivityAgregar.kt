@@ -45,6 +45,7 @@ class ActivityAgregar : AppCompatActivity(), View.OnClickListener{
             showFilerChooser()
         else(v === btCargar)
         uploadFile()
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -89,7 +90,7 @@ class ActivityAgregar : AppCompatActivity(), View.OnClickListener{
                     var marca = tvMarca.text.toString()
                     var imagen = downloadUri.toString()
                     var nombre = tvNombre.text.toString()
-                    var precio = "$" + etNuevoPrecio.text.toString()
+                    var precio = etNuevoPrecio.text.toString()
                     var map = mutableMapOf<String,Any>()
                     // map["id"] = id
                     map["cate"] = cate

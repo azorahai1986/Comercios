@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_mostrar_imagen.*
 
 enum class ProviderType {
     BIENVENIDO
@@ -50,13 +49,11 @@ class MainActivity : AppCompatActivity() {
         if (user?.email.isNullOrEmpty()){
             ibCerrarSesion.visibility = View.INVISIBLE
             tvCerrarSesion.visibility = View.INVISIBLE
-            tvTitulo.visibility = View.VISIBLE
             flot_btAgregar.visibility = View.INVISIBLE
             tvProvider.visibility = View.INVISIBLE
             tvEmail.visibility = View.INVISIBLE
         }else{
 
-            tvTitulo.visibility = View.INVISIBLE
 
         }
         swiperefreshlayout.setOnRefreshListener {
@@ -97,6 +94,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
     }
     // Ingresar con mail y contraseña..........................................
     fun setup(email: String, provider:String){
@@ -108,8 +106,9 @@ class MainActivity : AppCompatActivity() {
     // Traer los datos de Firebase...............................................
     fun loadPromociones(){
         viewModel.fetchUserData().observe(this, Observer {
-            adapter?.mutableListopromo = it as ArrayList<Promociones>
+            adapter?.setData( it as ArrayList<Promociones>)
             adapter?.notifyDataSetChanged()
+
 
         })
     }
@@ -119,5 +118,29 @@ class MainActivity : AppCompatActivity() {
         loadPromociones()
     }
 
+    fun obtenerDatosAdapter(arrayCant: ArrayList<Int>, arrayPrec:ArrayList<Double>){
+        var sum = 0
+        for (i in arrayCant){
+            sum += i
+            Log.e("Sumatoria de Main", sum.toString())
 
+        }
+
+        var sumPrecio = 0.0
+        for (p in arrayPrec){
+            sumPrecio += p
+            Log.e("Sumatoria de Main", sum.toString())
+
+        }
+        tvTotPrecio.text = "Total $$sumPrecio"
+        tvCantidad.text = "$sum Unidades"
+
+
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

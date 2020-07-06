@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView_promo"
@@ -23,57 +24,110 @@
 
             <ImageView
                 android:id="@+id/imageViewPromo"
-                android:layout_width="140dp"
-                android:layout_height="150dp"
+                android:layout_width="match_parent"
+                android:layout_height="197dp"
                 android:src="@drawable/fideos" />
 
             <TextView
                 android:id="@+id/tvCateg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Alimento"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/colorPrimary"
+                android:text="Alimento"
                 android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
                 android:textSize="12dp" />
 
-                <TextView
-                    android:id="@+id/tvNombre"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fideos tirabuzón"
-                    android:textColor="@color/colorPrimary"
-                    android:textAlignment="center"
-                    android:textSize="12dp" />
+            <TextView
+                android:id="@+id/tvNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fideos tirabuzón"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/tviewMarca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Matarazzo"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/tvPrecio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:text="$90"
+                android:textColor="@color/colorFirebase"
+                android:textSize="24dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/btRestar"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:elevation="8dp"
+                android:src="@drawable/ic_resta"/>
+
 
                 <TextView
-                    android:id="@+id/tviewMarca"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvValorCantidad"
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
-                    android:text="Matarazzo"
-                    android:textColor="@color/colorPrimary"
+                    android:ems="10"
+                    android:text="0"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+                <ImageButton
+                android:id="@+id/btSumar"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
                     android:layout_marginTop="5dp"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
+                android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_horizontal"
+                android:elevation="8dp"
+                android:src="@drawable/ic_sumar" />
 
-
-
-                <TextView
-                    android:id="@+id/tvPrecio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$90"
-                    android:textColor="@color/colorFirebase"
-                    android:textSize="24dp"
-                    android:layout_marginRight="5dp"/>
-
-
-
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_template_cantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="cantidad"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_template_precio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:text="Precio"/>
 
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -10,6 +10,7 @@
     <string name="categoria">Nueva Categoria</string>
     <string name="marca">Nueva Marca</string>
     <string name="salir_editar">Precione aquí para \n aplicar los cambios</string>
+    <string name="dialog_tv_titulo"> Se perderán todos los datos de la compra \n Si ingresas a la información \n del producto en esta instancia</string>
 
 
 </resources>

@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.persistableBundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.comercios.MainActivity
@@ -20,15 +19,20 @@ import kotlinx.android.synthetic.main.template_rvpromo.view.*
 class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val activity: MainActivity)
     :RecyclerView.Adapter<AdapterPromociones.ViewHolderPromo>() {
 
+    // arrays que seran llenados con 0 para que por cada item exista un 0. asi poder contar la cantidad de productos seleccionados. o su precio
     var arrayCantidades: ArrayList<Int> = ArrayList()
     var arrayPecios: ArrayList<Double> = ArrayList()
+    var arrayFiltro: ArrayList<Promociones> = ArrayList()
 
     fun setData(datos: ArrayList<Promociones>){
         mutableListopromo = datos
+        Log.e("datos", datos.toString())
         arrayCantidades = ArrayList()
+        arrayFiltro = ArrayList(mutableListopromo)
+        Log.e("arrayFiltro", arrayFiltro.toString())
         //  promociones [prom1, prom2, prom3]
         // cantidades   [4 ,   2,    0]
-        for(d in mutableListopromo){
+        for(d in datos){
             arrayCantidades.add(0)
             arrayPecios.add(0.0)
 
@@ -38,17 +42,18 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
     }
 
 
+
    inner class ViewHolderPromo(itemView: View):RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterPromociones.ViewHolderPromo =
         ViewHolderPromo(LayoutInflater.from(parent.context).inflate(R.layout.template_rvpromo, parent, false))
 
-    override fun getItemCount(): Int= mutableListopromo.size
+    override fun getItemCount(): Int= arrayFiltro.size
 
 
     override fun onBindViewHolder(holder: AdapterPromociones.ViewHolderPromo, position: Int) {
-        val enlazarVista =mutableListopromo[position]
 
+        val enlazarVista = arrayFiltro[position]
 
         holder.itemView.tvNombre.text = enlazarVista.nombre
         holder.itemView.tvPrecio.text = "$ "+enlazarVista.precio
@@ -72,6 +77,7 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
                 val dialogConstructor = AlertDialog.Builder(activity)
                     .setView(dialogCompra)
                     .setTitle("  peligro de perder la compra")
+
                 //mostrar el dialog
                 val alertDialog = dialogConstructor.show()
                 dialogCompra.btQuedarse.setOnClickListener {
@@ -80,7 +86,7 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
                 }
                 dialogCompra.btIr.setOnClickListener {
 
-                   pasarDeActividad(holder, position)
+                   pasarDeActividad(position)
                     alertDialog.dismiss()
 
                 }
@@ -124,9 +130,10 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
         }
 
 
+
     }
-    fun pasarDeActividad(holder: AdapterPromociones.ViewHolderPromo, position: Int){
-        val enlazarVista = mutableListopromo[position]
+    fun pasarDeActividad(position: Int){
+        val enlazarVista = arrayFiltro[position]
         activity.startActivity(
             Intent(activity, MostrarImagen::class.java)
                 .putExtra("Id_Imagen", enlazarVista.imagen )
@@ -136,5 +143,31 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
                 .putExtra("Id_Precio", enlazarVista.precio))
     }
 
-}
+    fun filtrado(editFiltro: String){
+        var filtroCaracter = editFiltro
+        var tempList: ArrayList<Promociones> = ArrayList()
 
+        if (filtroCaracter.isNotEmpty()) {
+
+            Log.e("Filtro", filtroCaracter)
+            for (d in arrayFiltro) {
+
+                if (editFiltro in d.nombre) {
+                    tempList.add(d)
+
+                    arrayFiltro = tempList
+                    notifyDataSetChanged()
+                }
+
+            }
+
+        }
+        notifyDataSetChanged()
+        //Log.e("tempFilter", tempFilter.toString())
+        Log.e("mutab en adapter", tempList.toString())
+
+    }
+
+
+
+}

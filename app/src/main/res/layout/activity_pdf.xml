@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".actividades.Pdf">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/tvPro"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:text="cantidad"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#0D239F"
+        android:textColorHint="#0721B1" />
+
+    <TextView
+        android:id="@+id/tvCan"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="Producto"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#4605BA" />
+
+    <TextView
+        android:id="@+id/tvPre"
+        android:layout_width="76dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:text="Precio"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#0F2BC6" />
+
+    <TextView
+        android:id="@+id/tvTot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sub Total"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="#0923AF" />
+</LinearLayout>
+<View
+android:layout_width="match_parent"
+android:layout_height="2dp"
+android:background="@android:color/background_dark"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerPdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+android:id="@+id/tvTotalPresupuesto"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Total Compra"
+android:textAlignment="center"
+android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+android:textColorHint="#EA0909" />
+    <Button
+        android:id="@+id/guardarPdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="generar pedido"/>
+
+</LinearLayout>

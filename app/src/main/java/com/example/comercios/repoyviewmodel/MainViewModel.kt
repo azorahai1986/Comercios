@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.comercios.MainActivity
 import com.example.comercios.actividades.ActivityAgregar
+import com.example.comercios.modelos.Ofertas
 import com.example.comercios.modelos.Promociones
 
 class MainViewModel: ViewModel() {
@@ -18,4 +19,12 @@ class MainViewModel: ViewModel() {
         }
         return mutableData
     }
+    fun fetchUserDataOfertas():LiveData<MutableList<Ofertas>>{
+        val mutableDataOfertas = MutableLiveData<MutableList<Ofertas>>()
+        repo.getOfertas().observeForever {
+            mutableDataOfertas.value = it
+        }
+        return mutableDataOfertas
+    }
+
 }

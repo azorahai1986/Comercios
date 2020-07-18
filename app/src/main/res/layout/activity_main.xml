@@ -5,30 +5,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="330dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="#6f6f6f"
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
-            <ImageView
-                android:id="@+id/Imageview"
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerOfertas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="40dp"
-                android:fitsSystemWindows="false"
-                android:scaleType="centerCrop"
-                android:elevation="4dp"
-                android:src="@drawable/indumentaria"
-                app:layout_collapseMode="parallax" />
+                android:layout_marginTop="120dp"/>
 
+            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                android:id="@+id/indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="310dp"
+                app:dotsColor="#100F0F"
+                app:dotsCornerRadius="8dp"
+                app:dotsSize="16dp"
+                app:dotsSpacing="4dp"
+                app:dotsWidthFactor="2.5"
+                app:progressMode="true"
+                app:selectedDotColor="#59605F"/>
+
+            <EditText
+                android:id="@+id/edtSearch"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="75dp"
+                android:background="#FFFFFF"
+                android:hint="filtrar"
+                android:scaleType="center"
+                app:layout_collapseMode="parallax" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -105,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="cantidad"
+                android:textStyle="bold"
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ibCerrarSesion" />
@@ -115,6 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Total $"
+                android:textStyle="bold"
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCantidad" />
@@ -130,7 +152,7 @@
                 app:srcCompat="@drawable/ic_cerrar_sesion" />
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/ibEnviarAPdf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -139,6 +161,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btAcceder"
                 app:srcCompat="@drawable/ic_agregar" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="Generar pedido"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/ibEnviarAPdf"
+                app:layout_constraintTop_toBottomOf="@+id/tvAcceder" />
 
             <TextView
                 android:id="@+id/tvAcceder"

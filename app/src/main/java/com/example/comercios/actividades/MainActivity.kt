@@ -3,15 +3,25 @@ package com.example.comercios
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.LayoutDirection
 import android.util.Log
 import android.view.View
+import android.widget.HorizontalScrollView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import com.example.comercios.actividades.ActivityAgregar
 import com.example.comercios.actividades.LoginActivity
+import com.example.comercios.actividades.Pdf
 import com.example.comercios.adaptadores.AdapterPromociones
+import com.example.comercios.adaptadores.OfertasAdapter
+import com.example.comercios.modelos.ModeloPdf
+import com.example.comercios.modelos.Ofertas
 import com.example.comercios.modelos.Promociones
 import com.example.comercios.repoyviewmodel.MainViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -27,8 +37,12 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
 
     private var adapter: AdapterPromociones? = null
+    private var adapterOfertas: OfertasAdapter? = null
     private lateinit var auth: FirebaseAuth // para saber si hay existe un email
-
+// array para todos los datos que serán enviados al pdf.................
+    private var pdfdatosArray: ArrayList<Promociones>?= null
+    private var pdfPreciosArray: ArrayList<Double>?= null
+    var arrayFiltro: ArrayList<Promociones>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,7 +106,57 @@ class MainActivity : AppCompatActivity() {
         rv_promociones.layoutManager = GridLayoutManager(this, 2)
         rv_promociones.adapter = adapter
 
+        adapterOfertas = OfertasAdapter(arrayListOf(), this)
+        viewPagerOfertas.adapter = adapterOfertas
+        indicator.setViewPager2(viewPagerOfertas)
 
+
+        // pasaré datos al pdf.......................................................
+
+        ibEnviarAPdf.setOnClickListener {
+            if (tvTotPrecio.text.isNullOrEmpty()){
+                Toast.makeText(this, "Agrega productos a la lista", Toast.LENGTH_SHORT).show()
+            }else{
+                // igualaré el array a la los datos que estan en el recycler promociones para enviar esos datos al recyclerPdf
+                pdfdatosArray = adapter?.mutableListopromo
+                val enviarDatosAlPdf = arrayListOf<ModeloPdf>()
+                if (pdfdatosArray != null){
+                    for (index in 0 until pdfdatosArray!!.size) {
+                        if(pdfPreciosArray!![index] > 0){
+                            val productosSeleccionados = ModeloPdf()
+                            productosSeleccionados.producto = pdfdatosArray!![index].nombre
+                            productosSeleccionados.precio = pdfdatosArray!![index].precio.toDouble()
+                            productosSeleccionados.cantidad = ((pdfPreciosArray!![index] / productosSeleccionados.precio).toInt())
+                            productosSeleccionados.subTotal = pdfPreciosArray!![index]
+                            enviarDatosAlPdf.add(productosSeleccionados)
+                        }
+                    }
+
+                    val intent = Intent(this, Pdf::class.java)
+                    intent.putExtra(Pdf.PROD_SELECT, enviarDatosAlPdf)
+                    intent.putExtra("Total Precios", tvTotPrecio.text.toString())
+                    startActivity(intent)
+                    }
+            }
+        }
+        // dar funcion al editTextSearch para filtrar el recycler:::::::::::::::::::::.....
+
+
+        edtSearch.addTextChangedListener(object :TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                adapter?.filtrado(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+        })
 
 
     }
@@ -112,27 +176,36 @@ class MainActivity : AppCompatActivity() {
 
         })
     }
+    fun loadOfertas(){
+        viewModel.fetchUserDataOfertas().observe(this, Observer {
+            adapterOfertas?.setDataOfertas(it as ArrayList<Ofertas>)
+            adapterOfertas?.notifyDataSetChanged()
+
+          })
+    }
 
     override fun onResume() {
         super.onResume()
         loadPromociones()
+        loadOfertas()
     }
 
     fun obtenerDatosAdapter(arrayCant: ArrayList<Int>, arrayPrec:ArrayList<Double>){
         var sum = 0
         for (i in arrayCant){
             sum += i
-            Log.e("Sumatoria de Main", sum.toString())
+            //Log.e("Sumatoria de Main", sum.toString())
 
         }
 
         var sumPrecio = 0.0
         for (p in arrayPrec){
             sumPrecio += p
-            Log.e("Sumatoria de Main", sum.toString())
+            //Log.e("Sumatoria de Main", sum.toString())
 
         }
         tvTotPrecio.text = "Total $$sumPrecio"
+        pdfPreciosArray = arrayPrec // esto me servirá para enviar los precios totales al pdf
         tvCantidad.text = "$sum Unidades"
 
 
@@ -143,4 +216,8 @@ class MainActivity : AppCompatActivity() {
         super.onBackPressed()
         finish()
     }
+    // funcion para el filtrado de recyclerView
+
+
+
 }

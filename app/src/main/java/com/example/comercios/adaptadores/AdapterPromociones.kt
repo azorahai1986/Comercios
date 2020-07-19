@@ -54,9 +54,10 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
     override fun onBindViewHolder(holder: AdapterPromociones.ViewHolderPromo, position: Int) {
 
         val enlazarVista = arrayFiltro[position]
+        val index = indexPromo(enlazarVista)
 
         holder.itemView.tvNombre.text = enlazarVista.nombre
-        holder.itemView.tvPrecio.text = "$ "+enlazarVista.precio
+        holder.itemView.tvPrecio.text = "$ ${enlazarVista.precio}"
         holder.itemView.tvCateg.text = enlazarVista.cate
         holder.itemView.tviewMarca.text = enlazarVista.marca
         Glide.with(activity).load(enlazarVista.imagen).into(holder.itemView.imageViewPromo)
@@ -86,7 +87,7 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
                 }
                 dialogCompra.btIr.setOnClickListener {
 
-                   pasarDeActividad(position)
+                   pasarDeActividad(index)
                     alertDialog.dismiss()
 
                 }
@@ -95,21 +96,22 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
         }
 
         //daré funciones a los botones de agregar y restar.................................
-        holder.itemView.tvValorCantidad.text = arrayCantidades[position].toString()
-        holder.itemView.tv_template_cantidad.text = arrayCantidades[position].toString()
-        holder.itemView.tv_template_precio.text = arrayPecios[position].toString()
-        if (arrayCantidades[position] == 0)holder.itemView.tv_template_cantidad.text = "cantidad"
-        if (arrayCantidades[position] == 0)holder.itemView.tv_template_precio.text = "precio $"
+        holder.itemView.tvValorCantidad.text = arrayCantidades[index].toString()
+        holder.itemView.tv_template_cantidad.text = arrayCantidades[index].toString()
+        holder.itemView.tv_template_precio.text = arrayPecios[index].toString()
+        if (arrayCantidades[index] == 0)holder.itemView.tv_template_cantidad.text = "cantidad"
+        if (arrayCantidades[index] == 0)holder.itemView.tv_template_precio.text = "precio $"
 
         // boton para sumar valores............................................
         holder.itemView.btSumar.setOnClickListener {
-            arrayCantidades[position] = arrayCantidades[position] + 1
 
-            holder.itemView.tvValorCantidad.text = arrayCantidades[position].toString()
-            holder.itemView.tv_template_cantidad.text = "cantidad ${arrayCantidades[position]}"
-            arrayPecios[position] = arrayPecios[position] + enlazarVista.precio.toDouble()
+            arrayCantidades[index] = arrayCantidades[index] + 1
 
-            holder.itemView.tv_template_precio.text = " precio $ ${arrayPecios[position]}"
+            holder.itemView.tvValorCantidad.text = arrayCantidades[index].toString()
+            holder.itemView.tv_template_cantidad.text = "cantidad ${arrayCantidades[index]}"
+            arrayPecios[index] = arrayPecios[index] + enlazarVista.precio.toDouble()
+
+            holder.itemView.tv_template_precio.text = " precio $ ${arrayPecios[index]}"
 
             // desde aquí envio los arrays al main activity. a la funcion obtenerdatosadapter
             activity.obtenerDatosAdapter(arrayCant = arrayCantidades, arrayPrec = arrayPecios)
@@ -119,19 +121,25 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
 
         // boton para restar los valores.....................................................
         holder.itemView.btRestar.setOnClickListener {
-
-            if (arrayCantidades[position] > 0){
-                arrayCantidades[position] = arrayCantidades[position] - 1
-                holder.itemView.tvValorCantidad.text = arrayCantidades[position].toString()
-                holder.itemView.tv_template_cantidad.text = "cantidad ${arrayCantidades[position]}"
-                arrayPecios[position] = arrayPecios[position] - enlazarVista.precio.toDouble()
-                holder.itemView.tv_template_precio.text = " precio $ ${arrayPecios[position]}"
+            if (arrayCantidades[index] > 0){
+                arrayCantidades[index] = arrayCantidades[index] - 1
+                holder.itemView.tvValorCantidad.text = arrayCantidades[index].toString()
+                holder.itemView.tv_template_cantidad.text = "cantidad ${arrayCantidades[index]}"
+                arrayPecios[index] = arrayPecios[index] - enlazarVista.precio.toDouble()
+                holder.itemView.tv_template_precio.text = " precio $ ${arrayPecios[index]}"
+                activity.obtenerDatosAdapter(arrayCant = arrayCantidades, arrayPrec = arrayPecios)
             }
         }
-
-
-
     }
+
+    fun indexPromo(prom: Promociones): Int{
+        for (i in 0 until mutableListopromo.size){
+            if(mutableListopromo[i].id == prom.id)
+                return i
+        }
+        return 0
+    }
+
     fun pasarDeActividad(position: Int){
         val enlazarVista = arrayFiltro[position]
         activity.startActivity(
@@ -144,27 +152,17 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
     }
 
     fun filtrado(editFiltro: String){
-        var filtroCaracter = editFiltro
-        var tempList: ArrayList<Promociones> = ArrayList()
-
-        if (filtroCaracter.isNotEmpty()) {
-
-            Log.e("Filtro", filtroCaracter)
-            for (d in arrayFiltro) {
-
+        if (editFiltro.isNotEmpty()) {
+            arrayFiltro = ArrayList()
+            for (d in mutableListopromo) {
                 if (editFiltro in d.nombre) {
-                    tempList.add(d)
-
-                    arrayFiltro = tempList
-                    notifyDataSetChanged()
+                    arrayFiltro.add(d)
                 }
-
             }
-
+        } else{
+            arrayFiltro = ArrayList(mutableListopromo)
         }
         notifyDataSetChanged()
-        //Log.e("tempFilter", tempFilter.toString())
-        Log.e("mutab en adapter", tempList.toString())
 
     }
 

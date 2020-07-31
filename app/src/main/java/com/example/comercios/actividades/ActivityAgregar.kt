@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -25,6 +26,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_agregar.*
+import kotlinx.android.synthetic.main.activity_mostrar_imagen.*
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.util.*
@@ -33,6 +35,7 @@ import kotlin.collections.ArrayList
 //para usar el storage agregaré un view en la clase appcompat
 class ActivityAgregar : AppCompatActivity(), View.OnClickListener{
 
+    // para animar los botones:::::::::::::::::
     private val PICK_IMAGE_REQUEST = 1234
     private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
     private var adapter: AdapterPromociones? = null
@@ -127,7 +130,6 @@ class ActivityAgregar : AppCompatActivity(), View.OnClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agregar)
-
 
         storage = Firebase.storage
 

@@ -3,18 +3,22 @@ package com.example.comercios
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.LayoutDirection
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.HorizontalScrollView
 import android.widget.Toast
+import androidx.core.view.isNotEmpty
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
+import androidx.viewpager2.widget.ViewPager2
 import com.example.comercios.actividades.ActivityAgregar
 import com.example.comercios.actividades.LoginActivity
 import com.example.comercios.actividades.Pdf
@@ -28,12 +32,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
+import java.time.Duration
 
 enum class ProviderType {
     BIENVENIDO
 }
 
 class MainActivity : AppCompatActivity() {
+
+    var isOpen = true
     private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
 
     private var adapter: AdapterPromociones? = null
@@ -42,8 +49,14 @@ class MainActivity : AppCompatActivity() {
 // array para todos los datos que serán enviados al pdf.................
     private var pdfdatosArray: ArrayList<Promociones>?= null
     private var pdfPreciosArray: ArrayList<Double>?= null
-    var arrayFiltro: ArrayList<Promociones>? = null
-
+// dar movimiento automatico al viewPager
+private val handler = Handler()
+    private val runnable = Runnable {
+        if(adapterOfertas?.itemsOfertas?.size != 0) {
+            viewPagerOfertas.currentItem = if (viewPagerOfertas!!.currentItem == adapterOfertas!!.itemsOfertas.size-1) 0
+            else viewPagerOfertas!!.currentItem+1
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +96,8 @@ class MainActivity : AppCompatActivity() {
 
 
         // Dar Eventos a los botones.......................................
+
+
         btAcceder.setOnClickListener {
             if (user?.email.isNullOrEmpty()){
                 val intent = Intent(this, LoginActivity::class.java)
@@ -96,8 +111,32 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        //Ir al activityAgregar...............................................
+        //Ir al activityAgregar y animar botones...............................................
+        val rotate = AnimationUtils.loadAnimation(this, R.anim.rotar)
+        val abrire = AnimationUtils.loadAnimation(this, R.anim.abrir)
+        val cerrar = AnimationUtils.loadAnimation(this, R.anim.cerrar)
+
+
         flot_btAgregar.setOnClickListener {
+
+            isOpen = if (isOpen){
+                floatBtAgregarProducto.startAnimation(abrire)
+                floatBtAgregarCartel.startAnimation(abrire)
+                textOfertas.startAnimation(abrire)
+                textLista.startAnimation(abrire)
+                //flot_btAgregar.startAnimation(rotate)
+                false
+            }else{
+                floatBtAgregarProducto.startAnimation(cerrar)
+                floatBtAgregarCartel.startAnimation(cerrar)
+                textOfertas.startAnimation(cerrar)
+                textLista.startAnimation(cerrar)
+                //flot_btAgregar.startAnimation(rotate)
+                true
+            }
+
+        }
+        floatBtAgregarProducto.setOnClickListener {
             val intent = Intent(this, ActivityAgregar::class.java)
             startActivity(intent)
         }
@@ -106,10 +145,24 @@ class MainActivity : AppCompatActivity() {
         rv_promociones.layoutManager = GridLayoutManager(this, 2)
         rv_promociones.adapter = adapter
 
+        if (adapter == null){
+            animacion.visibility = View.GONE
+        }
+
+        //inflar viewPagerOfertas....................................................
         adapterOfertas = OfertasAdapter(arrayListOf(), this)
         viewPagerOfertas.adapter = adapterOfertas
-        indicator.setViewPager2(viewPagerOfertas)
+        indicator.setViewPager2(viewPagerOfertas)// poner los puntitos delante del viewPager
 
+        viewPagerOfertas.registerOnPageChangeCallback(object :ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                handler.removeCallbacks(runnable)
+                handler.postDelayed(runnable, 5000)
+            }
+
+        })
+        
 
         // pasaré datos al pdf.......................................................
 
@@ -169,12 +222,16 @@ class MainActivity : AppCompatActivity() {
     }
     // Traer los datos de Firebase...............................................
     fun loadPromociones(){
+
         viewModel.fetchUserData().observe(this, Observer {
             adapter?.setData( it as ArrayList<Promociones>)
             adapter?.notifyDataSetChanged()
-
-
+            if (adapter != null){
+                animacion.visibility = View.GONE
+                animacion2.visibility = View.GONE
+            }
         })
+
     }
     fun loadOfertas(){
         viewModel.fetchUserDataOfertas().observe(this, Observer {

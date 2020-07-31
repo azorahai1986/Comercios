@@ -84,6 +84,10 @@ class Pdf : AppCompatActivity() {
             mDoc.open()
 
             val mPrecioTotal = tvTotalPresupuesto.text.toString()
+            val nombrePresu = etNombrePdf.text
+            val domicilioPresu = etDireccionPdf.text
+            val espacio = tvEspacio.text.toString()
+
 
 
             mDoc.addAuthor("Hernan Torres")
@@ -124,9 +128,24 @@ class Pdf : AppCompatActivity() {
                 )
             )
 
+            mDoc.add(table)
+            val nombrePdf = Paragraph("                    Nombre Completo: $nombrePresu", Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD))
+            nombrePdf.alignment = Element.ALIGN_LEFT
+            mDoc.add(nombrePdf)
+
+            mDoc.add(table)
+            val domicilioPdf = Paragraph("                    Domicilio: $domicilioPresu", Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD))
+            domicilioPdf.alignment = Element.ALIGN_LEFT
+            mDoc.add(domicilioPdf)
+
+            mDoc.add(table)
+            val espacioPdf = Paragraph(espacio, Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD))
+            espacioPdf.alignment = Element.ALIGN_CENTER
+            mDoc.add(espacioPdf)
+
             for (list in arrayDatosRecyclerPdf!!){
-                table.addCell(PdfPCell(Phrase(list.cantidad.toString(), Font(Font.FontFamily.HELVETICA, 12f))))
                 table.addCell(PdfPCell(Phrase(list.producto, Font(Font.FontFamily.HELVETICA, 12f))))
+                table.addCell(PdfPCell(Phrase(list.cantidad.toString(), Font(Font.FontFamily.HELVETICA, 12f))))
                 table.addCell(PdfPCell(Phrase(list.precio.toString(), Font(Font.FontFamily.HELVETICA, 12f))))
                 table.addCell(PdfPCell(Phrase(list.subTotal.toString(), Font(Font.FontFamily.HELVETICA, 12f))))
 
@@ -134,9 +153,10 @@ class Pdf : AppCompatActivity() {
 
 
             mDoc.add(table)
-            val preT = Paragraph(mPrecioTotal, Font(Font.FontFamily.HELVETICA, 10f, Font.BOLD))
-            preT.alignment = Element.ALIGN_RIGHT
+            val preT = Paragraph(mPrecioTotal, Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD))
+            preT.alignment = Element.ALIGN_CENTER
             mDoc.add(preT)
+
 
             mDoc.close()
             Toast.makeText(this, " $mFileName.pdf\nse guardó en \n$mFilePath", Toast.LENGTH_SHORT).show()

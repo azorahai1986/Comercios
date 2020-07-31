@@ -136,8 +136,10 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
         for (i in 0 until mutableListopromo.size){
             if(mutableListopromo[i].id == prom.id)
                 return i
+            Log.e("return I", i.toString())
         }
         return 0
+        Log.e("return 0", 0.toString())
     }
 
     fun pasarDeActividad(position: Int){

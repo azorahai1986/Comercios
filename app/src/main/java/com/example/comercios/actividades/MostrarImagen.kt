@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.view.marginTop
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.comercios.MainActivity
@@ -27,6 +29,7 @@ import kotlinx.android.synthetic.main.template_rvpromo.view.*
 class MostrarImagen : AppCompatActivity() {
     //private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
 
+    var isOpen = false
     var infoEmail:String? = null
     var idImagen:String?=null
     var idPrecio:String?=null
@@ -45,6 +48,8 @@ class MostrarImagen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mostrar_imagen)
 
+        val rotate = AnimationUtils.loadAnimation(this, R.anim.rotar)
+        val abrire = AnimationUtils.loadAnimation(this, R.anim.abrir)
         auth = Firebase.auth
         val user = Firebase.auth.currentUser
         user?.let {
@@ -53,14 +58,27 @@ class MostrarImagen : AppCompatActivity() {
         }
 
             if (user?.email.isNullOrEmpty()){
-
-                imagebtDelete.visibility = View.INVISIBLE
-                imagebtEditar.visibility = View.INVISIBLE
-                tvEditMostrar.visibility = View.INVISIBLE
-                tvDeleteMostrar.visibility = View.INVISIBLE
+                toolbarMostrar.visibility = View.GONE
 
             }
+
         imagebtEditar.setOnClickListener {
+
+            if (isOpen){
+
+                Toast.makeText(this, "ya estas editando", Toast.LENGTH_SHORT).show()
+                isOpen = false
+            }else{
+                floatBtEditProducto.startAnimation(abrire)
+                floatBtEditProducto.startAnimation(rotate)
+                floatBtEditPrecio.startAnimation(abrire)
+                floatBtEditPrecio.startAnimation(rotate)
+                floatBtEditMarca.startAnimation(abrire)
+                floatBtEditMarca.startAnimation(rotate)
+                imagebtEditar.startAnimation(rotate)
+                isOpen = true
+
+            }
             tvEditMostrar.visibility = View.VISIBLE
             tvDeleteMostrar.visibility = View.VISIBLE
             etMostrarNombre.visibility = View.VISIBLE
@@ -70,6 +88,7 @@ class MostrarImagen : AppCompatActivity() {
             floatBtEditMarca.visibility = View.VISIBLE
             floatBtEditPrecio.visibility = View.VISIBLE
             tvSalirEdicion.visibility = View.VISIBLE
+            
         }
 
 
@@ -124,7 +143,7 @@ class MostrarImagen : AppCompatActivity() {
             val editar = FirebaseFirestore.getInstance().collection("Promociones").document(id.toString())
             editar.update(map)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Precio Modificado con exito", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Marca Modificada con exito", Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener {
                     Toast.makeText(this, "Falló Modificación", Toast.LENGTH_SHORT).show()
 
@@ -138,7 +157,7 @@ class MostrarImagen : AppCompatActivity() {
             val editar = FirebaseFirestore.getInstance().collection("Promociones").document(id.toString())
             editar.update(map)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Precio Modificado con exito", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Producto Modificado con exito", Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener {
                     Toast.makeText(this, "Falló Modificación", Toast.LENGTH_SHORT).show()
 

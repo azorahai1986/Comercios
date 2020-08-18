@@ -7,25 +7,64 @@
     android:layout_height="match_parent"
     tools:context=".actividades.CrearOfertas">
 
-    <ImageView
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/edit_text_precio_ofertas"
+        android:layout_width="390dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/shampoo" />
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="10dp"
+        android:hint="ingrese un precio de oferta"
+        android:inputType="numberDecimal"/>
 
     <TextView
-        android:layout_width="160dp"
+        android:id="@+id/textTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:text="Ingresa el valor de tu Oferta!!"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="#FFF"
+        android:elevation="10dp"
+        android:textAlignment="center"
+        android:layout_margin="10dp"
+        android:background="@color/colorPrimary"/>
+
+    <TextView
+        android:layout_width="390dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/colorPrimary"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="245dp"
+        android:background="@color/colorPrimary"/>
+    <ImageView
+        android:id="@+id/image_crar_ofertas"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:src="@drawable/shampoo"
+        android:layout_marginTop="270dp"
+        android:elevation="15dp"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:layout_width="180dp"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="267dp"
         android:background="@color/colorFirebase"
         android:text="Super Oferta"
         android:textStyle="bold"
         android:textSize="25dp"
+        android:elevation="15dp"
         android:textColor="#FFF"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="360dp"
         android:layout_marginLeft="20dp"
         android:text="$"
         android:textStyle="bold"
@@ -33,13 +72,97 @@
         android:textColor="@color/colorFirebase"/>
 
     <TextView
+        android:id="@+id/text_view_precio_oferta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="380dp"
         android:layout_marginLeft="60dp"
         android:text="150"
         android:textStyle="bold"
         android:textSize="40dp"
+        android:elevation="15dp"
         android:textColor="@color/colorFirebase"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bt_cargar_ofertas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_agregar"
+        app:fabSize="normal"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="crear Oferta"
+        android:textColor="@color/colorFirebase"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="90dp"
+        android:layout_marginBottom="30dp"/>
+    <TextView
+        android:id="@+id/text_view_color_fuente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="colores de fuente"
+        android:textColor="@color/colorFirebase"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="205dp"/>
+
+    <TextView
+        android:id="@+id/text_view_Informar_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="colores de fuente"
+        android:textColor="@color/colorFirebase"
+        android:layout_marginLeft="250dp"
+        android:layout_marginTop="205dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bt_color_negro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="195dp"
+        android:layout_marginLeft="70dp"
+        android:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
+        app:fabSize="mini"
+        app:pressedTranslationZ="12dp"
+        android:visibility="invisible"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bt_color_naranja"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="195dp"
+        android:layout_marginLeft="125dp"
+        android:backgroundTint="@color/colorFirebase"
+        app:fabSize="mini"
+        app:pressedTranslationZ="12dp"
+        android:visibility="invisible"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bt_color_azul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="195dp"
+        android:layout_marginLeft="180dp"
+        android:backgroundTint="@color/colorPrimary"
+        app:fabSize="mini"
+        app:pressedTranslationZ="12dp"
+        android:visibility="invisible"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bt_cargar_colores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_agregar"
+        android:layout_marginTop="195dp"
+        android:layout_marginLeft="5dp"
+        app:fabSize="mini"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -170,4 +170,5 @@ class AdapterPromociones(var mutableListopromo: ArrayList<Promociones>, val acti
 
 
 
+
 }

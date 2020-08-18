@@ -35,14 +35,13 @@ import kotlin.collections.ArrayList
 //para usar el storage agregaré un view en la clase appcompat
 class ActivityAgregar : AppCompatActivity(), View.OnClickListener{
 
-    // para animar los botones:::::::::::::::::
     private val PICK_IMAGE_REQUEST = 1234
     private val viewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
     private var adapter: AdapterPromociones? = null
 
     // Método para subir imagenes al firebase storage
     private var filePath: Uri? = null
-    internal var storageReference: StorageReference? = null
+    private var storageReference: StorageReference? = null
     override fun onClick(v: View?) {
         if (v === imageView)
             showFilerChooser()

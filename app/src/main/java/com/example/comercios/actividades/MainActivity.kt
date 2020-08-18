@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.viewpager2.widget.ViewPager2
 import com.example.comercios.actividades.ActivityAgregar
+import com.example.comercios.actividades.CrearOfertas
 import com.example.comercios.actividades.LoginActivity
 import com.example.comercios.actividades.Pdf
 import com.example.comercios.adaptadores.AdapterPromociones
@@ -140,6 +141,10 @@ private val handler = Handler()
             val intent = Intent(this, ActivityAgregar::class.java)
             startActivity(intent)
         }
+        floatBtAgregarCartel.setOnClickListener {
+            val intent = Intent(this, CrearOfertas::class.java)
+            startActivity(intent)
+        }
         // inflar recyclerView...................................................
         adapter = AdapterPromociones(arrayListOf(), this)
         rv_promociones.layoutManager = GridLayoutManager(this, 2)
@@ -150,7 +155,7 @@ private val handler = Handler()
         }
 
         //inflar viewPagerOfertas....................................................
-        adapterOfertas = OfertasAdapter(arrayListOf(), this)
+        adapterOfertas = OfertasAdapter(arrayListOf(), this, CrearOfertas())
         viewPagerOfertas.adapter = adapterOfertas
         indicator.setViewPager2(viewPagerOfertas)// poner los puntitos delante del viewPager
 

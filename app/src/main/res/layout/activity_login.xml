@@ -19,10 +19,16 @@
         android:gravity="center"
         android:textColor="#FFFFFF"/>
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_acceder"
+        android:background="@color/colorAccent"
+        />
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/etEmail"
@@ -55,6 +61,12 @@
         android:background="#039BE5"
         android:text="Acceder"
         android:textColor="#FFFFFF" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/colorFirebase"
+        />
 
 
 </LinearLayout>
